@@ -1,26 +1,27 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Product.module.scss';
 import clsx from 'clsx';
 import Button from '../Button/Button';
 
 const Product = (props) => {
-  const { name, price, sizes, colors } = props;
+  const { title, basePrice, sizes, colors } = props;
+  const [currentColor, setCurrentColor] = useState(colors[0]);
+  const [currentSize, setCurrentSize] = useState(sizes[0]);
 
   return (
     <article className={styles.product}>
       <div className={styles.imageContainer}>
         <img
           className={styles.image}
-          alt={name}
+          alt={title}
           src={`${process.env.PUBLIC_URL}/images/products/shirt-kodilla--black.jpg`}
         />
       </div>
       <div>
         <header>
-          <h2 className={styles.name}>{name}</h2>
-          <span className={styles.price}>Price: {price}$</span>
+          <h2 className={styles.name}>{title}</h2>
+          <span className={styles.price}>Price: {basePrice}$</span>
         </header>
         <form>
           <div className={styles.sizes}>
@@ -30,7 +31,8 @@ const Product = (props) => {
                 <li key={size.name}>
                   <button
                     type="button"
-                    className={clsx(styles.size, { [styles.active]: size.isActive })}
+                    className={clsx(styles.size, { [styles.active]: size === currentSize })}
+                    onClick={() => setCurrentSize(size)}
                   >
                     {size.name}
                   </button>
@@ -45,7 +47,9 @@ const Product = (props) => {
                 <li key={color}>
                   <button
                     type="button"
-                    className={clsx(styles.color, { [styles.active]: color.isActive })}
+                    className={clsx(styles.color, { [styles.active]: color === currentColor })}
+                    style={{ background: color }}
+                    onClick={() => setCurrentColor(color)}
                   />
                 </li>
               ))}
@@ -61,22 +65,19 @@ const Product = (props) => {
 };
 
 Product.propTypes = {
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  basePrice: PropTypes.number.isRequired,
   sizes: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      isActive: PropTypes.bool,
+      additionalPrice: PropTypes.number.isRequired,
     })
   ).isRequired,
-  colors: PropTypes.arrayOf(
-    PropTypes.shape({
-      isActive: PropTypes.bool,
-    })
-  ).isRequired,
+  colors: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
 export default Product;
+
 
 
 // import styles from './Product.module.scss';
