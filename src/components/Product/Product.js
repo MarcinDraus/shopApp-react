@@ -29,22 +29,28 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
     return basePrice;
   };
 
+  // eslint-disable-next-line no-unused-vars
+  const [summaryInfo, setSummaryInfo] = useState(null);//skasowac
+
   const summary = (e) => {
     e.preventDefault();
-    console.log('summary');
-    const summary = {
-      name: title,
-      price: getPrice(),
+    const summaryData = {
+      name: name,
+      title: title,
+      totalPrice: getPrice(),
       size: currentSize,
       color: currentColor,
     };
-    
     console.log(summary);
+    console.log(summaryData);
   };
 
   const shirtImageUrl = `${process.env.PUBLIC_URL}/images/products/shirt-${name}--${currentColor}.jpg`;
 
   return (
+
+
+    
     <article className={styles.product}>
       <div className={styles.imageContainer}>
         <img className={styles.image} alt={title} src={shirtImageUrl} />
