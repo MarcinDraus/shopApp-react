@@ -1,5 +1,5 @@
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
+
 import styles from './ProductImage.module.scss';
 
 const ProductImage = ({ name, title, currentColor }) => {
